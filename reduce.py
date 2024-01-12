@@ -20,7 +20,7 @@ X_train,X_Val = train_test_split(train_array,test_size=0.2,random_state=42)
 #Train Neural Network
 #Tune Neural Network
 
-model = Autoencoder()
+model = Autoencoder(latent_dim=7)
 model.train(X_train,X_Val)
 model.evaluate(X_Val)
 

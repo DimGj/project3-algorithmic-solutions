@@ -13,17 +13,17 @@ class Autoencoder:
         input_img = Input(shape=self.input_shape)
 
         # Encoder
-        conv1 = Conv2D(32, (3, 3), activation='relu', padding='same')(input_img)
+        conv1 = Conv2D(32, (3, 3), activation='gelu', padding='same')(input_img)
         pool1 = MaxPooling2D(pool_size=(2, 2))(conv1)
-        conv2 = Conv2D(64, (3, 3), activation='relu', padding='same')(pool1)
+        conv2 = Conv2D(64, (3, 3), activation='gelu', padding='same')(pool1)
         pool2 = MaxPooling2D(pool_size=(2, 2))(conv2)
-        conv3 = Conv2D(self.latent_dim, (3, 3), activation='relu', padding='same')(pool2)
+        conv3 = Conv2D(self.latent_dim, (3, 3), activation='gelu', padding='same')(pool2)
         #10 pixels
 
         # Decoder
-        conv4 = Conv2D(64, (3, 3), activation='relu', padding='same')(conv3)
+        conv4 = Conv2D(64, (3, 3), activation='gelu', padding='same')(conv3)
         up1 = UpSampling2D((2, 2))(conv4)
-        conv5 = Conv2D(32, (3, 3), activation='relu', padding='same')(up1)
+        conv5 = Conv2D(32, (3, 3), activation='gelu', padding='same')(up1)
         up2 = UpSampling2D((2, 2))(conv5)
         decoded = Conv2D(1, (3, 3), activation='sigmoid', padding='same')(up2)
 
@@ -33,7 +33,7 @@ class Autoencoder:
 
         return autoencoder_model
 
-    def train(self, x_train,x_val, epochs=10, batch_size=128):
+    def train(self, x_train,x_val, epochs=40, batch_size=64):
         history = History()
 
         self.autoencoder_model.fit(x_train,x_train, epochs=epochs, batch_size=batch_size,validation_data=[x_val,x_val],callbacks=[history], shuffle=True,verbose=2)
@@ -63,7 +63,7 @@ class Autoencoder:
         print(f"Reconstruction Loss on Validation Set: {validation_loss}")
 
 
-    def PlotLearningCurve(self,training_data,validation_data,epochs_range,labels=['Training Loss','Validation Loss'],title='Training and Validation Loss',ylabel='Loss',output_file='./Images/loss_fig'):
+    def PlotLearningCurve(self,training_data,validation_data,epochs_range,labels=['Training Loss','Validation Loss'],title='Training and Validation Loss',ylabel='Loss',output_file='./Images/loss_fig2'):
         plt.figure(figsize=(8,4))
 
         plt.plot(epochs_range,training_data,label=labels[0])
