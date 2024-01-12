@@ -1,91 +1,91 @@
-GNNS results
+MRNG results
 Query: 0
-Nearest Neighbor-0: 1919
-distanceApproximate: 1483.64
-distanceLatentTrue: 1274.28
-distanceTrue: 1034.78
-tAverageApproximate: 2.07314ms
-tAverageLatentTrue: 183.589ms
-tAverageTrue:363.973ms
-AF: 1.43378
+Nearest Neighbor-0: 773
+distanceApproximate: 1139.44
+distanceLatentTrue: 1139.44
+distanceTrue: 1175.03
+tAverageApproximate: 2.03154ms
+tAverageLatentTrue: 11.9653ms
+tAverageTrue:23.4379ms
+AF: 0.969706
 Query: 1
-Nearest Neighbor-0: 1874
-distanceApproximate: 1627.63
-distanceLatentTrue: 1587.52
-distanceTrue: 1554.42
-tAverageApproximate: 2.30176ms
-tAverageLatentTrue: 166.259ms
-tAverageTrue:421.769ms
-AF: 1.0471
+Nearest Neighbor-0: 378
+distanceApproximate: 1436.11
+distanceLatentTrue: 1436.11
+distanceTrue: 1830.26
+tAverageApproximate: 1.18947ms
+tAverageLatentTrue: 17.4316ms
+tAverageTrue:29.1801ms
+AF: 0.784646
 Query: 2
-Nearest Neighbor-0: 9011
-distanceApproximate: 1194
-distanceLatentTrue: 953.359
-distanceTrue: 497.042
-tAverageApproximate: 1.98609ms
-tAverageLatentTrue: 90.3171ms
-tAverageTrue:186.464ms
-AF: 2.40222
+Nearest Neighbor-0: 604
+distanceApproximate: 674.383
+distanceLatentTrue: 674.383
+distanceTrue: 645.058
+tAverageApproximate: 1.87994ms
+tAverageLatentTrue: 21.9128ms
+tAverageTrue:52.4573ms
+AF: 1.04546
 Query: 3
-Nearest Neighbor-0: 4962
-distanceApproximate: 1217.75
-distanceLatentTrue: 1217.75
-distanceTrue: 1297.79
-tAverageApproximate: 2.373ms
-tAverageLatentTrue: 96.4794ms
-tAverageTrue:187.954ms
-AF: 0.938325
+Nearest Neighbor-0: 192
+distanceApproximate: 1106.81
+distanceLatentTrue: 1106.81
+distanceTrue: 1394.31
+tAverageApproximate: 4.34593ms
+tAverageLatentTrue: 22.791ms
+tAverageTrue:50.6906ms
+AF: 0.793807
 Query: 4
-Nearest Neighbor-0: 2452
-distanceApproximate: 1462
-distanceLatentTrue: 1416.5
-distanceTrue: 1322.51
-tAverageApproximate: 2.9365ms
-tAverageLatentTrue: 103.82ms
-tAverageTrue:189.341ms
-AF: 1.10547
+Nearest Neighbor-0: 914
+distanceApproximate: 1194.98
+distanceLatentTrue: 1194.98
+distanceTrue: 1335.51
+tAverageApproximate: 2.65551ms
+tAverageLatentTrue: 21.7263ms
+tAverageTrue:56.8046ms
+AF: 0.894771
 Query: 5
-Nearest Neighbor-0: 8916
-distanceApproximate: 918.363
-distanceLatentTrue: 845.764
-distanceTrue: 373.042
-tAverageApproximate: 2.02666ms
-tAverageLatentTrue: 95.1531ms
-tAverageTrue:369.872ms
-AF: 2.46182
+Nearest Neighbor-0: 466
+distanceApproximate: 919.254
+distanceLatentTrue: 919.254
+distanceTrue: 757.116
+tAverageApproximate: 1.77853ms
+tAverageLatentTrue: 20.5694ms
+tAverageTrue:55.4529ms
+AF: 1.21415
 Query: 6
-Nearest Neighbor-0: 3162
-distanceApproximate: 1721.43
-distanceLatentTrue: 1481.56
+Nearest Neighbor-0: 564
+distanceApproximate: 1320.69
+distanceLatentTrue: 1320.69
 distanceTrue: 1489.44
-tAverageApproximate: 2.35434ms
-tAverageLatentTrue: 179.141ms
-tAverageTrue:439.147ms
-AF: 1.15575
+tAverageApproximate: 2.7194ms
+tAverageLatentTrue: 21.8599ms
+tAverageTrue:55.0119ms
+AF: 0.886701
 Query: 7
-Nearest Neighbor-0: 4544
-distanceApproximate: 1504.01
-distanceLatentTrue: 1367.68
-distanceTrue: 1555.03
-tAverageApproximate: 2.30486ms
-tAverageLatentTrue: 168.276ms
-tAverageTrue:425.393ms
-AF: 0.96719
+Nearest Neighbor-0: 374
+distanceApproximate: 1412.97
+distanceLatentTrue: 1412.97
+distanceTrue: 1844.49
+tAverageApproximate: 2.29081ms
+tAverageLatentTrue: 19.4566ms
+tAverageTrue:32.8061ms
+AF: 0.76605
 Query: 8
-Nearest Neighbor-0: 3076
-distanceApproximate: 1701.09
-distanceLatentTrue: 1562.45
-distanceTrue: 2051.44
-tAverageApproximate: 2.25176ms
-tAverageLatentTrue: 188.326ms
-tAverageTrue:390.997ms
-AF: 0.829217
+Nearest Neighbor-0: 800
+distanceApproximate: 1498.11
+distanceLatentTrue: 1498.11
+distanceTrue: 2235
+tAverageApproximate: 2.54108ms
+tAverageLatentTrue: 22.1351ms
+tAverageTrue:34.9068ms
+AF: 0.670293
 Query: 9
-Nearest Neighbor-0: 5165
-distanceApproximate: 1274.16
-distanceLatentTrue: 1246.56
-distanceTrue: 991.598
-tAverageApproximate: 2.48075ms
-tAverageLatentTrue: 175.912ms
-tAverageTrue:402.27ms
-AF: 1.28496
+Nearest Neighbor-0: 930
+distanceApproximate: 1048.1
+distanceLatentTrue: 1048.1
+distanceTrue: 1391.53
+tAverageApproximate: 1.92248ms
+tAverageLatentTrue: 15.308ms
+tAverageTrue:19.7404ms
+AF: 0.753201

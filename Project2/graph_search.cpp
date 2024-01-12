@@ -34,7 +34,7 @@ int main(int argc,char** argv)
             return -1;
     }
 
-    //LatentImages.erase(LatentImages.begin() + 10000,LatentImages.end());
+    LatentImages.erase(LatentImages.begin() + 1000,LatentImages.end());
     Images.erase(Images.begin() + 1000,Images.end());
     //initialize graph depending on method
     Graph* graph;
@@ -78,10 +78,23 @@ int main(int argc,char** argv)
     {
         QueryPoint.PointID = i;
         QueryPoint.Vector = &Queries[i];
-        time.push_back(SearchOnGraph(ExpansionPoints,&QueryPoint,graph,NearestNeighbors,TankCandidates));
-        BruteForceTime.push_back(BruteForce(&TrueDistances,Images,*QueryPoint.Vector,NearestNeighbors));
-        WriteToFile(MyFile,time,BruteForceTime,method,ExpansionPoints,TrueDistances,&QueryPoint);
-        ClearVectors(time,BruteForceTime,ExpansionPoints,TrueDistances);
+        if(latent)
+        {
+            LatentQueryPoint.PointID = i;
+            LatentQueryPoint.Vector = &LatentQueries[i];
+            time.push_back(SearchOnGraph(ExpansionPoints,&LatentQueryPoint,graph,NearestNeighbors,TankCandidates));
+            BruteForceTime.push_back(BruteForce(&TrueDistances,LatentImages,*LatentQueryPoint.Vector,NearestNeighbors));
+            TrueBruteForceTime.push_back(BruteForce(&BruteForceDistances,Images,*QueryPoint.Vector,NearestNeighbors));
+            WriteToFile(MyFile,time,BruteForceTime,method,ExpansionPoints,TrueDistances,BruteForceDistances,TrueBruteForceTime,&LatentQueryPoint);
+            ClearVectors(time,BruteForceTime,ExpansionPoints,TrueDistances,TrueBruteForceTime,BruteForceDistances);
+        }
+        else
+        {
+            time.push_back(SearchOnGraph(ExpansionPoints,&QueryPoint,graph,NearestNeighbors,TankCandidates));
+            BruteForceTime.push_back(BruteForce(&TrueDistances,Images,*QueryPoint.Vector,NearestNeighbors));
+            WriteToFile(MyFile,time,BruteForceTime,method,ExpansionPoints,TrueDistances,&QueryPoint);
+            ClearVectors(time,BruteForceTime,ExpansionPoints,TrueDistances);
+        }
     }
     MyFile.close();
     delete method;
