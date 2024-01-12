@@ -1,0 +1,91 @@
+GNNS results
+Query: 0
+Nearest Neighbor-0: 1919
+distanceApproximate: 1483.64
+distanceLatentTrue: 1274.28
+distanceTrue: 1034.78
+tAverageApproximate: 2.07314ms
+tAverageLatentTrue: 183.589ms
+tAverageTrue:363.973ms
+AF: 1.43378
+Query: 1
+Nearest Neighbor-0: 1874
+distanceApproximate: 1627.63
+distanceLatentTrue: 1587.52
+distanceTrue: 1554.42
+tAverageApproximate: 2.30176ms
+tAverageLatentTrue: 166.259ms
+tAverageTrue:421.769ms
+AF: 1.0471
+Query: 2
+Nearest Neighbor-0: 9011
+distanceApproximate: 1194
+distanceLatentTrue: 953.359
+distanceTrue: 497.042
+tAverageApproximate: 1.98609ms
+tAverageLatentTrue: 90.3171ms
+tAverageTrue:186.464ms
+AF: 2.40222
+Query: 3
+Nearest Neighbor-0: 4962
+distanceApproximate: 1217.75
+distanceLatentTrue: 1217.75
+distanceTrue: 1297.79
+tAverageApproximate: 2.373ms
+tAverageLatentTrue: 96.4794ms
+tAverageTrue:187.954ms
+AF: 0.938325
+Query: 4
+Nearest Neighbor-0: 2452
+distanceApproximate: 1462
+distanceLatentTrue: 1416.5
+distanceTrue: 1322.51
+tAverageApproximate: 2.9365ms
+tAverageLatentTrue: 103.82ms
+tAverageTrue:189.341ms
+AF: 1.10547
+Query: 5
+Nearest Neighbor-0: 8916
+distanceApproximate: 918.363
+distanceLatentTrue: 845.764
+distanceTrue: 373.042
+tAverageApproximate: 2.02666ms
+tAverageLatentTrue: 95.1531ms
+tAverageTrue:369.872ms
+AF: 2.46182
+Query: 6
+Nearest Neighbor-0: 3162
+distanceApproximate: 1721.43
+distanceLatentTrue: 1481.56
+distanceTrue: 1489.44
+tAverageApproximate: 2.35434ms
+tAverageLatentTrue: 179.141ms
+tAverageTrue:439.147ms
+AF: 1.15575
+Query: 7
+Nearest Neighbor-0: 4544
+distanceApproximate: 1504.01
+distanceLatentTrue: 1367.68
+distanceTrue: 1555.03
+tAverageApproximate: 2.30486ms
+tAverageLatentTrue: 168.276ms
+tAverageTrue:425.393ms
+AF: 0.96719
+Query: 8
+Nearest Neighbor-0: 3076
+distanceApproximate: 1701.09
+distanceLatentTrue: 1562.45
+distanceTrue: 2051.44
+tAverageApproximate: 2.25176ms
+tAverageLatentTrue: 188.326ms
+tAverageTrue:390.997ms
+AF: 0.829217
+Query: 9
+Nearest Neighbor-0: 5165
+distanceApproximate: 1274.16
+distanceLatentTrue: 1246.56
+distanceTrue: 991.598
+tAverageApproximate: 2.48075ms
+tAverageLatentTrue: 175.912ms
+tAverageTrue:402.27ms
+AF: 1.28496

@@ -14,11 +14,14 @@ def ReadInput(file_path, IsQueryFile=False):
             num_cols = struct.unpack('>I', file.read(4))[0]
 
             images = []
+            indexes = []
 
             if IsQueryFile:
                 num_images = min(num_images, 10)
 
-            for _ in range(num_images):
+            for i in range(num_images):
+                indexes.append(i)
+
                 image = np.frombuffer(file.read(num_rows * num_cols), dtype=np.uint8)
                 images.append(image)
 
@@ -32,10 +35,23 @@ def ReadInput(file_path, IsQueryFile=False):
     images_array = np.array(images)
     images_array = images_array.reshape(-1, num_rows, num_cols, 1).astype(np.float32) / 255.0
 
-    return images_array
+    return images_array,indexes
 
-def WriteOutput(output_dir,data):
-    np.savetxt(output_dir,data)
+def WriteOutput(output_dir,images):
+    index,image = images[0]
+    with open(output_dir,'wb') as file:
+        file.write(struct.pack('>I', 52))
+        file.write(struct.pack('>I', len(images)))
+        file.write(struct.pack('>I', len(image)))
+
+
+        for index,image in images:
+            pixel_data = image.astype(np.uint8).tobytes()
+
+            index_bytes = struct.pack('>I', index)
+            #file.write(index_bytes)
+            file.write(pixel_data)
+
 
 
 def HandleArguments():

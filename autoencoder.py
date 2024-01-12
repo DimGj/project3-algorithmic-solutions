@@ -8,6 +8,7 @@ class Autoencoder:
         self.input_shape = input_shape
         self.latent_dim = latent_dim
         self.autoencoder_model = self.__build_autoencoder()
+        self.encoder_model = self.__build_encoder_model()
 
     def __build_autoencoder(self):
         input_img = Input(shape=self.input_shape)
@@ -41,18 +42,27 @@ class Autoencoder:
         training_loss = history.history['loss']
         validation_loss = history.history['val_loss']
 
-        #training_accuracy = history.history['accuracy']
-        #validation_accuracy = history.history['val_accuracy']
-
         epochs_range = range(1, epochs + 1)
 
         self.PlotLearningCurve(training_loss,validation_loss,epochs_range)
-        #self.PlotLearningCurve(training_accuracy,validation_accuracy,epochs_range,['Training Accuracy','Validation Accuracy'],'Training and Validation Accuracy','Accuracy','accuracy_fig')
 
     #Returns image in latent space
+    def __build_encoder_model(self):
+        input_img = Input(shape=self.input_shape)
+
+        # Encoder
+        conv1 = Conv2D(32, (3, 3), activation='gelu', padding='same')(input_img)
+        pool1 = MaxPooling2D(pool_size=(2, 2))(conv1)
+        conv2 = Conv2D(64, (3, 3), activation='gelu', padding='same')(pool1)
+        pool2 = MaxPooling2D(pool_size=(2, 2))(conv2)
+        conv3 = Conv2D(self.latent_dim, (3, 3), activation='gelu', padding='same')(pool2)
+
+
+        encoder_model = Model(input_img, conv3)
+        return encoder_model
+    
     def encode(self, x):
-        encoder_model = Model(self.autoencoder_model.input, self.autoencoder_model.layers[4].output)
-        return encoder_model.predict(x)
+        return self.encoder_model.predict(x)
 
     def decode(self, x):
         decoder_model = Model(self.autoencoder_model.layers[5].input, self.autoencoder_model.layers[-1].output)
