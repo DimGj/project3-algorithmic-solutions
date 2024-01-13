@@ -2,6 +2,8 @@ from keras.layers import Input, Conv2D, MaxPooling2D, UpSampling2D
 from keras.models import Model
 from keras.callbacks import History
 import matplotlib.pyplot as plt
+import os
+import re
 
 class Autoencoder:
     def __init__(self, input_shape=(28, 28, 1), latent_dim=10):
@@ -73,8 +75,27 @@ class Autoencoder:
         print(f"Reconstruction Loss on Validation Set: {validation_loss}")
 
 
-    def PlotLearningCurve(self,training_data,validation_data,epochs_range,labels=['Training Loss','Validation Loss'],title='Training and Validation Loss',ylabel='Loss',output_file='./Images/loss_fig2'):
-        plt.figure(figsize=(8,4))
+    def PlotLearningCurve(self, training_data, validation_data, epochs_range, labels=['Training Loss', 'Validation Loss'], title='Training and Validation Loss', ylabel='Loss'):
+        
+        image_folder = './Images'
+        latest_number = 0
+        
+        existing_files = [file for file in os.listdir(image_folder) if re.match(r'loss-fig(\d+)\.png', file)] #get all the files in dir that match the 'loss-fig<number?.png' name
+
+        if existing_files:
+            for file in existing_files:
+                numeric_part = re.search(r'loss-fig(\d+)\.png', file).group(1) #check the number of each file
+                numeric_value = int(numeric_part)
+                if numeric_value > latest_number:   #get the latest numeric value which is also the max one
+                    latest_number = numeric_value
+        else:
+            latest_number = 0 #if no existing files, start the counter from 0
+            
+        plot_counter = latest_number + 1
+
+        output_file = f'{image_folder}/loss-fig{plot_counter}.png' #create the filename for the new image file
+        
+        plt.figure(figsize=(8, 4))
 
         plt.plot(epochs_range,training_data,label=labels[0])
         plt.plot(epochs_range,validation_data,label=labels[1])
