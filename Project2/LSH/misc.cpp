@@ -343,11 +343,14 @@ int GetNewFiles(char** query_file,char** output_file)
 void WriteToFile(ostream& MyFile,vector<double>& time,vector<double>& BruteForceTime,char* method,vector<tuple<GraphPoint*, double>>& ExpansionPoints,vector<double>& TrueDistances,GraphPoint* QueryPoint)
 {
     MyFile<<"Query: "<<QueryPoint->PointID<<endl; //Write Query Point ID
+    double AverageApproxDist = 0.0,AverageTrueDist = 0.0;
     for(int i = 0;i < ExpansionPoints.size(); i++)//Write Input Point ID,Distance by method,Distance by BruteForce
     {
         MyFile<<"Nearest Neighbor-"<<i<<": "<<get<0>(ExpansionPoints[i])->PointID<<endl
               <<"distanceApproximate: "<<get<1>(ExpansionPoints[i])<<endl
               <<"distanceTrue: "<<TrueDistances[i]<<endl;
+              AverageApproxDist += get<1>(ExpansionPoints[i]);
+              AverageTrueDist += TrueDistances[i];
     }
     double AlgorithmAverageTime = 0.0,BruteForceAverageTime = 0.0;
     if(time.size() != BruteForceTime.size()) //This should be true all the time but since we find the average value in the same loop below
@@ -357,12 +360,15 @@ void WriteToFile(ostream& MyFile,vector<double>& time,vector<double>& BruteForce
         AlgorithmAverageTime += time[i];
         BruteForceAverageTime += BruteForceTime[i];
     }
-    double MAF = get<1>(ExpansionPoints[0]) / TrueDistances[0]; //MAF is the fraction of the approximate nearest neighbor / true nearest neighbor
+    AverageApproxDist /= ExpansionPoints.size();
+    AverageTrueDist /= TrueDistances.size();
+
+    double AF = AverageApproxDist / AverageTrueDist; //MAF is the fraction of the approximate nearest neighbor / true nearest neighbor
     AlgorithmAverageTime /= time.size(); //Compute average time
     BruteForceAverageTime /= BruteForceTime.size();//for brute force as well as method
     MyFile<<"tAverageApproximate: "<<AlgorithmAverageTime<<"ms"<<endl
           <<"tAverageTrue: "<<BruteForceAverageTime<<"ms"<<endl
-          <<"MAF: "<<MAF<<endl;
+          <<"AF: "<<AF<<endl;
 }
 
 void WriteToFile(ostream& MyFile,vector<double>& time,vector<double>& BruteForceTime,char* method,vector<tuple<GraphPoint*, double>>& ExpansionPoints,
@@ -401,6 +407,6 @@ void WriteToFile(ostream& MyFile,vector<double>& time,vector<double>& BruteForce
 
     MyFile<<"tAverageApproximate: "<<AlgorithmAverageTime<<"ms"<<endl
           <<"tAverageLatentTrue: "<<BruteForceAverageTime<<"ms"<<endl
-          <<"tAverageTrue:"<<TrueBruteForceAverageTime<<"ms"<<endl
+          <<"tAverageTrue: "<<TrueBruteForceAverageTime<<"ms"<<endl
           <<"AF: "<<AF<<endl;
 }

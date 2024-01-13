@@ -34,7 +34,7 @@ int main(int argc,char** argv)
             return -1;
     }
 
-    LatentImages.erase(LatentImages.begin() + 1000,LatentImages.end());
+   // LatentImages.erase(LatentImages.begin() + 1000,LatentImages.end());
     Images.erase(Images.begin() + 1000,Images.end());
     //initialize graph depending on method
     Graph* graph;
