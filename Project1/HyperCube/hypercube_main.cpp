@@ -69,7 +69,7 @@ void InitializeProgram(int HashDimension,int MaxValuesChecked,int Probes,int Nea
 {
     /*Open train set*/
     OpenFile(input_file,&train_set,false);
-    train_set.erase(train_set.begin() + 5000,train_set.end());
+    train_set.erase(train_set.begin() + 2000,train_set.end());
     /*Initialize HyperCube class item*/
     *hypercube = new Hypercube(HashDimension,MaxValuesChecked,Probes,NearestNeighbors,Range);
     Point point;

@@ -67,9 +67,9 @@ void InitializeProgram(int K,int L,int N,int R,char* input_file,LSH** Lsh,vector
 {
     /*Open train set*/
     OpenFile(input_file,&train_set,false);
-    train_set.erase(train_set.begin() + 5000,train_set.end());
+    train_set.erase(train_set.begin() + 2000,train_set.end());
     /*Initialize LSH class item*/
-    *Lsh = new LSH(L,K,R,N,train_set.size());
+    *Lsh = new LSH(L,K,R,N,train_set.size(),train_set[0].size());
     /*Hash the training set in the LSH item*/
     for(int i = 0;i < train_set.size();i++)
     {

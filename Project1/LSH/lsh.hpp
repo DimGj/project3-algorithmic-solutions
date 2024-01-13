@@ -13,7 +13,7 @@ class LSH{
 
     public:
          /*Constructor*/
-        LSH(int HashTables,int HashFunctions,int Range,int NearestNeighbors,int ImageCount);
+        LSH(int HashTables,int HashFunctions,int Range,int NearestNeighbors,int ImageCount,int ImageSize);
         /*Standard hash used by LSH when called from Lsh_main*/
         double Hash(vector<byte>& Vector,int PointID,bool test);
         int FindHashValue(vector<int> HashCodes,vector<int> RandomValues,int* ID);

@@ -1,6 +1,6 @@
 #include "lsh.hpp"
 
-LSH::LSH(int HashTables,int HashFunctions,int range,int nearestNeighbors,int ImageCount)
+LSH::LSH(int HashTables,int HashFunctions,int range,int nearestNeighbors,int ImageCount,int ImageSize)
 {
     /*Resize the hash table and hash functions vectors to be of size L*/
     hashTables.resize(HashTables);
@@ -11,7 +11,7 @@ LSH::LSH(int HashTables,int HashFunctions,int range,int nearestNeighbors,int Ima
 
     /*Generate Random vectors used in hashing*/
     vector<vector<double>> RandomVectors;
-    GenerateRandomVectors(HashFunctions,784,&RandomVectors);
+    GenerateRandomVectors(HashFunctions,ImageSize,&RandomVectors);
     unsigned int w = 5;
     double t = 0.0;
     int r = 0;
@@ -130,7 +130,7 @@ int LSH::WriteToFile(ofstream& MyFile,Point point,vector<double>& Distances,vect
 
     AverageApproxDist /= max;
     AverageTrueDist /= max;
-    
+
     for(int i = 0;i < Time.size();i++)
     {
         AlgorithmAverageTime += Time[i];
