@@ -39,7 +39,7 @@ int main(int argc,char** argv)
 int Program(int NearestNeighbors,char* input_file,char* query_file,char* output_file,Hypercube** hypercube,vector<vector<byte>>& train_set,vector<vector<byte>>& test_set)
 {
     Point test_point;
-    vector<double> Distances;
+    vector<double> Distances,Time,BruteForceTime;
 
     /*Open test set*/
     OpenFile(query_file,&test_set,true);
@@ -53,10 +53,10 @@ int Program(int NearestNeighbors,char* input_file,char* query_file,char* output_
         /*Should be 10 images*/
         test_point.Vector = &test_set[i];
         test_point.PointID = i;
-        BruteForce_duration = BruteForce(&Distances,train_set,test_set[i],NearestNeighbors);
-        Hypercube_duration = (*hypercube)->QueryHash(test_point);
+        BruteForceTime.push_back(BruteForce(&Distances,train_set,test_set[i],NearestNeighbors));
+        Time.push_back((*hypercube)->QueryHash(test_point));
 
-        (*hypercube)->WriteToFile(MyFile,test_point,Distances,BruteForce_duration,Hypercube_duration);
+        (*hypercube)->WriteToFile(MyFile,test_point,Distances,BruteForceTime,Time);
         Distances.clear();
     }
     /*Close file*/

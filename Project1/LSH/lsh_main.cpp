@@ -36,8 +36,7 @@ int main(int argc,char** argv)
 int Program(int N,char* input_file,char* query_file,char* output_file,LSH** Lsh,vector<vector<byte>>& train_set,vector<vector<byte>>& test_set)
 {
     Point test_point;
-    vector<double> Distances;
-
+    vector<double> Distances,Time,BruteForceTime;
     /*Open test set*/
     OpenFile(query_file,&test_set,true);
     /*Open output file*/
@@ -47,14 +46,18 @@ int Program(int N,char* input_file,char* query_file,char* output_file,LSH** Lsh,
     {
         /*Print into the output file*/
         /*Should be 10 images*/
-        BruteForce_duration = BruteForce(&Distances,train_set,test_set[i],N);
-        LSH_duration = (*Lsh)->Hash(test_set[i],i,true);
+        BruteForceTime.push_back(BruteForce(&Distances,train_set,test_set[i],N));
+        Time.push_back((*Lsh)->Hash(test_set[i],i,true));
         test_point.Vector = &test_set[i];
         test_point.PointID = i;
 
-        (*Lsh)->WriteToFile(MyFile,test_point,Distances,BruteForce_duration,LSH_duration);
+        (*Lsh)->WriteToFile(MyFile,test_point,Distances,BruteForceTime,Time);
         Distances.clear();
+        Time.clear();
+        BruteForceTime.clear();
     }
+
+
     /*Close file*/
     MyFile.close();
     return 0;

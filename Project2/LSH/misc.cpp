@@ -349,8 +349,8 @@ void WriteToFile(ostream& MyFile,vector<double>& time,vector<double>& BruteForce
         MyFile<<"Nearest Neighbor-"<<i<<": "<<get<0>(ExpansionPoints[i])->PointID<<endl
               <<"distanceApproximate: "<<get<1>(ExpansionPoints[i])<<endl
               <<"distanceTrue: "<<TrueDistances[i]<<endl;
-              AverageApproxDist += get<1>(ExpansionPoints[i]);
-              AverageTrueDist += TrueDistances[i];
+        AverageApproxDist += get<1>(ExpansionPoints[i]);
+        AverageTrueDist += TrueDistances[i];
     }
     double AlgorithmAverageTime = 0.0,BruteForceAverageTime = 0.0;
     if(time.size() != BruteForceTime.size()) //This should be true all the time but since we find the average value in the same loop below

@@ -18,7 +18,7 @@ class Hypercube{
         double QueryHash(Point point);
         double CentroidHash(CentroidPoint point,vector<double>& Distances);
         void FindClosestNeighbors(vector<double>& Distances,int CentroidID,vector<Point>& Points);
-        int WriteToFile(ofstream& MyFile,Point point,vector<double>& Distances,double BruteForce_duration,double Hypercube_duration);
+        int WriteToFile(ofstream& MyFile,Point point,vector<double>& Distances,vector<double>& BruteForceTime,vector<double>& Time);
         int HammingDistance(string A,string B);
 };
 

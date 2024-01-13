@@ -196,7 +196,7 @@ void Hypercube::FindClosestNeighbors(vector<double>& Distances,int CentroidID,ve
 }
 
 
-int Hypercube::WriteToFile(ofstream& MyFile,Point point,vector<double>& Distances,double BruteForce_duration,double Hypercube_duration)
+int Hypercube::WriteToFile(ofstream& MyFile,Point point,vector<double>& Distances,vector<double>& BruteForceTime,vector<double>& Time)
 {
     int max = 0;
     /*If this is not checked,seg fault will happen*/
@@ -208,6 +208,7 @@ int Hypercube::WriteToFile(ofstream& MyFile,Point point,vector<double>& Distance
 
     sort(Candidates.begin(),Candidates.end(),ComparisonFunctionByDistance);
     MyFile<<"Query: "<<point.PointID<<endl;
+    double AverageApproxDist = 0.0,AverageTrueDist = 0.0;
     if(NearestNeighbors > Candidates.size())
         max = Candidates.size();
     else/*else if the candidates are more than the neighbors we want*/
@@ -221,15 +222,30 @@ int Hypercube::WriteToFile(ofstream& MyFile,Point point,vector<double>& Distance
         {
             MyFile<<"Nearest Neighbor "<<i<<": "<<Candidates[i].PointID<<endl
                   <<"distanceHyperCube: "<<Candidates[i].Distance<<endl
-                  <<"distanceTrue: "<<Distances[i]<<endl
-                  <<"tHyperCube: "<<Hypercube_duration<<"ms"<<endl
-                  <<"tTrue: "<<BruteForce_duration<<"ms"<<endl;
+                  <<"distanceTrue: "<<Distances[i]<<endl;
+                AverageApproxDist += Candidates[i].Distance;
+                AverageTrueDist += Distances[i];
+
         }
     }
-    MyFile<<"MAF: "<<Candidates[0].Distance/Distances[0]<<endl;
-   /* MyFile<<Range<<"-near Neighbors: "<<endl;
-    for(int i = 0;i < Candidates.size(); i++)
-        MyFile<<Candidates[i].PointID<<endl;*/
+    double AlgorithmAverageTime = 0.0,BruteForceAverageTime = 0.0;
+    AverageApproxDist /= max;
+    AverageTrueDist /= max;
+
+    for(int i = 0;i < Time.size();i++)
+    {
+        AlgorithmAverageTime += Time[i];
+        BruteForceAverageTime += BruteForceTime[i];
+    }
+
+    AlgorithmAverageTime /= Time.size();
+    BruteForceAverageTime /= BruteForceTime.size();
+
+    double AF = AverageApproxDist / AverageTrueDist;
+
+    MyFile<<"tAverageApproximate: "<<AlgorithmAverageTime<<"ms"<<endl
+          <<"tAverageTrue: "<<BruteForceAverageTime<<"ms"<<endl
+          <<"AF: "<<AF<<endl;
 
     return 0;
 }

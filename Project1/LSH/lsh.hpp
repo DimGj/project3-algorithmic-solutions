@@ -20,7 +20,7 @@ class LSH{
         double GenerateT(unsigned int w);
         int GenerateR();
         void GenerateRandomVectors(int HashFunctions,int dimension,vector<vector<double>>* RandomVectors);
-        int WriteToFile(ofstream& MyFile,Point point,vector<double>& Distances,double BruteForce_duration,double LSH_duration);
+        int WriteToFile(ofstream& MyFile,Point point,vector<double>& Distances,vector<double>& BruteForceTime,vector<double>& Time);
 
         /*These Overloaded instances are used when LSH is called by Cluster*/
         /*Hash a point*/
