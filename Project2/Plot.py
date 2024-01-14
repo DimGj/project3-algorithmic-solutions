@@ -1,6 +1,6 @@
 import sys
-import os
 import numpy as np
+import os
 import matplotlib.pyplot as plt
 
 
@@ -11,7 +11,6 @@ import matplotlib.pyplot as plt
 
 
 
-<<<<<<< HEAD:Plot.py
 
 def ReadClusterFiles(file_path):
     Silhouette = []
@@ -24,8 +23,6 @@ def ReadClusterFiles(file_path):
     return Silhouette
 
 
-=======
->>>>>>> e3686a42ffba6ff22043aaf4d797ca926a7e9a77:Project2/Plot.py
 def ReadLatentFiles(file_path):
     PointIDs,distanceApprox,distanceLatentBrute,distanceTrue,tApprox,tLatentTrue,tTrue,aF = [],[],[],[],[],[],[],[]
 
@@ -91,14 +88,13 @@ def Plot(latent_file,normal_file,isLatent = False):
         tTrue = list(map(float, tTrue))
         tLatentTrue = list(map(float,tLatentTrue))
 
-            #Create Distances Plot
+        #Create Distances Plot
         CreatePlot(distanceApprox,distanceTrue,PointIDs,title='Scatter Plot for distances',x_label='Query IDs',y_label='Distances',
                    scatter_labels=['Latent Distances','True Distances'],output_file='latent-true_distances')
-            #Create Time float
+        #Create Time float
         CreatePlot(tApprox ,tTrue,PointIDs,title='Scatter Plot for time',x_label='Query IDs',y_label='Time (ms)',
                    scatter_labels=['Latent time','True time'],output_file='latent-true_time')
-       
-        output_file_path = '.\latent_true-true_dist.png'
+        output_file_path = './Outputs/latent_true-true_dist.png'
         if not os.path.exists(output_file_path): #Check if the file already exists
             CreatePlot(distanceLatentBrute ,distanceTrue,PointIDs,title='Scatter Plot for distances',x_label='Query IDs',y_label='Distances',
                    scatter_labels=['Latent true dist','True dist'],output_file='latent_true-true_dist')
@@ -118,16 +114,12 @@ def Plot(latent_file,normal_file,isLatent = False):
     tApprox = list(map(float, tApprox))
     tTrue = list(map(float, tTrue))  
     aF_true = list(map(float, aF))
-<<<<<<< HEAD:Plot.py
     #Create Distances Plot
     CreatePlot(distanceApprox,distanceBrute,PointIDs,title='Scatter Plot for distances',x_label='Query IDs',y_label='Distances',
                 scatter_labels=['Approx Distances','True Distances'],output_file='approx-true_distances')
-        #Create Time float
-    CreatePlot(tApprox ,tTrue,PointIDs,title='Scatter Plot for time',x_label='Query IDs',y_label='Time (ms)',
-                scatter_labels=['Approx time','True time'],output_file='approx-true_time')
-        
+
     CreatePlot(aF_Latent ,aF_true,PointIDs,title='Scatter Plot for Approximation Factor',x_label='Query IDs',y_label='Approximation Factor',
-                scatter_labels=['Latent AF','True AF'],output_file='latent-true_AF') 
+                scatter_labels=['Latent AF','True AF'],output_file='latent-true_AF',meanAF=True) 
 
 def PlotCluster(cluster_file,cluster_latent):
     Silhouette = ReadClusterFiles(cluster_file)
@@ -145,40 +137,32 @@ def PlotCluster(cluster_file,cluster_latent):
     ids = range(0,len(Silhouette),1)
     CreatePlot(SilhouetteLatent,Silhouette,ids,title='Scatter Plot for Silhouette',x_label='Cluster IDs',y_label='Silhouettes',
                 scatter_labels=['Silhouettes Latent','True Silhouettes'],output_file='latent-true_silhouettes')      
-=======
-        #Create Distances Plot
-    CreatePlot(distanceApprox,distanceBrute,PointIDs,title='Scatter Plot for distances',x_label='Query IDs',y_label='Distances',
-                scatter_labels=['Approx Distances','True Distances'],output_file='approx-true_distances')
-    
-    CreatePlot(aF_Latent ,aF_true,PointIDs,title='Scatter Plot for Approximation Factor',x_label='Query IDs',y_label='Approximation Factor',
-                scatter_labels=['Latent AF','True AF'],output_file='latent-true_AF',meanAF=True)
-     
-    ###CreatePlot(tApprox ,tTrue,PointIDs,title='Scatter Plot for time',x_label='Query IDs',y_label='Time (ms)',  We didnt need that plot at the end
-    ###            scatter_labels=['Approx time','True time'],output_file='approx-true_time')
->>>>>>> e3686a42ffba6ff22043aaf4d797ca926a7e9a77:Project2/Plot.py
 
     
-def CreatePlot(approx_vals,true_vals,query_ids,title,x_label,y_label,scatter_labels,output_file,colors = ['red','blue'],figsize = (10,6),meanAF=False):
-        #Create Plot
-        plt.figure(figsize=figsize)
-        
-        labels,values = [] , []
-        if meanAF:
-            mean_ratio_af = np.mean(approx_vals) / np.mean(true_vals)  #Calculate mean Latent AF and True AF
-            labels = ['Mean ratio AF']
-            values = [mean_ratio_af]
-            plt.bar(labels, values, color=['purple']) #Inserting plt.bar into the existing plot
-            if values:
-                plt.text(0, values[0], f'{values[0]:.3f}', ha='center', va='bottom')
+def CreatePlot(approx_vals, true_vals, query_ids, title, x_label, y_label, scatter_labels, output_file, colors=['red', 'blue'], figsize=(10, 6), meanAF=False):
+    # Create Distances Plot
+    plt.figure(figsize=figsize)
 
-        plt.scatter(query_ids,approx_vals,label=scatter_labels[0],color=colors[0])
-        plt.scatter(query_ids,true_vals,label=scatter_labels[1],color=colors[1])   
-        plt.title(title)
-        plt.xticks(query_ids)
-        plt.xlabel(x_label)
-        plt.ylabel(y_label)
-        plt.legend()
-        plt.savefig(output_file)
+    labels, values = [], []
+    if meanAF:
+        mean_ratio_af = np.mean(approx_vals) / np.mean(true_vals)  # Calculate mean Latent AF and True AF
+        labels.append('Mean ratio AF')
+        values.append(mean_ratio_af)
+    
+    plt.bar(labels, values, color=['purple'])  # Inserting plt.bar into the existing plot
+
+    plt.scatter(query_ids, approx_vals, label=scatter_labels[0], color=colors[0])
+    plt.scatter(query_ids, true_vals, label=scatter_labels[1], color=colors[1])
+
+    for i, (label, value) in enumerate(zip(labels, values)):
+        if i == 0:
+            plt.text(i, value, f'{value:.2f}', ha='center', va='bottom')
+
+    plt.title(title)
+    plt.xlabel(x_label)
+    plt.ylabel(y_label)
+    plt.legend()
+    plt.savefig(output_file)
 
 latent_file,normal_file,cluster,cluster_latent = None,None,None,None
 
