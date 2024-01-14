@@ -42,7 +42,7 @@ typedef struct LatentPoint{
 
 void WriteToFile(ostream& MyFile,vector<double>& time,vector<double>& BruteForceTime,char* method,vector<tuple<GraphPoint*, double>>& ExpansionPoints,vector<double>& TrueDistances,GraphPoint* QueryPoint);
 void WriteToFile(ostream& MyFile,vector<double>& time,vector<double>& BruteForceTime,char* method,vector<tuple<GraphPoint*, double>>& ExpansionPoints,
-                vector<double>& TrueDistances,vector<double>& TrueBruteForceDistances,vector<double>& TrueBruteForceTime,GraphPoint* QueryPoint);
+                vector<tuple<double,int>>& BruteForceLatentToNormalSpace,vector<double>& TrueBruteForceDistances,vector<double>& TrueBruteForceTime,GraphPoint* QueryPoint,vector<vector<byte>>& Images);
 int GetNewFiles(char** query_file,char** output_file);
 int OpenLatentFile(char* filename,vector<vector<byte>>* images,bool test);
 int CheckFileExistance(char* filename,bool QueryFile,bool Latent,vector<vector<byte>>& Vector);
@@ -53,6 +53,8 @@ void GetArgs(int argc,char** argv,char** input_file,char** query_file,char** out
              int* RandomRestarts,int* NearestNeighbors,int* TankCandidates,char** method,bool* latent,char** latent_input_file,char** latent_query_file);
 int OpenFile(char* filename,vector<vector<byte>>* images,bool test);
 double BruteForce(vector<double>* Distances,vector<vector<byte>> Points,vector<byte> QueryPoint,int NearestNeighbors);
+double BruteForce(vector<tuple<double,int>>* Distances,vector<vector<byte>> Points,vector<byte> QueryPoint,int NearestNeighbors);
 double PNorm(vector<byte>* A,vector<byte>* B,int p);
 double PNorm(vector<double>& A,vector<byte>& B,int p);
 bool CandidatesComparisonFunciton(GraphPoint* A, GraphPoint* B);
+bool CandidatesComparisonFuncitonForTuple(tuple<double,int>& A,tuple<double,int>& B);

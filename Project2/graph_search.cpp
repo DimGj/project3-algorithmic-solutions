@@ -9,6 +9,7 @@ int main(int argc,char** argv)
     int GraphNearestNeighbors,Expansions,RandomRestarts,NearestNeighbors,TankCandidates;
     vector<vector<byte>> Images,Queries,LatentImages,LatentQueries;
     vector<tuple<GraphPoint*, double>> ExpansionPoints;
+    vector<tuple<double,int>> BruteForceLatentToNormalSpace;
     vector<double> TrueDistances,time,BruteForceTime,BruteForceDistances,TrueBruteForceTime;
     GraphPoint QueryPoint,LatentQueryPoint;
 
@@ -34,10 +35,7 @@ int main(int argc,char** argv)
             return -1;
     }
 
-    cout<<LatentImages.size()<<endl;
-    cout<<latent<<endl;
-
-    LatentImages.erase(LatentImages.begin() + 2000,LatentImages.end());
+    //LatentImages.erase(LatentImages.begin() + 2000,LatentImages.end());
     Images.erase(Images.begin() + 2000,Images.end());
     //initialize graph depending on method
     Graph* graph;
@@ -60,9 +58,9 @@ int main(int argc,char** argv)
                 LatentQueryPoint.PointID = i;
                 LatentQueryPoint.Vector = &LatentQueries[i];
                 time.push_back(GNNS(ExpansionPoints,&LatentQueryPoint,graph,Expansions,RandomRestarts,NearestNeighbors,10));
-                BruteForceTime.push_back(BruteForce(&TrueDistances,LatentImages,*LatentQueryPoint.Vector,NearestNeighbors));
+                BruteForceTime.push_back(BruteForce(&BruteForceLatentToNormalSpace,LatentImages,*LatentQueryPoint.Vector,NearestNeighbors));
                 TrueBruteForceTime.push_back(BruteForce(&BruteForceDistances,Images,*QueryPoint.Vector,NearestNeighbors));
-                WriteToFile(MyFile,time,BruteForceTime,method,ExpansionPoints,TrueDistances,BruteForceDistances,TrueBruteForceTime,&LatentQueryPoint);
+                WriteToFile(MyFile,time,BruteForceTime,method,ExpansionPoints,BruteForceLatentToNormalSpace,BruteForceDistances,TrueBruteForceTime,&QueryPoint,Images);
                 ClearVectors(time,BruteForceTime,ExpansionPoints,TrueDistances,TrueBruteForceTime,BruteForceDistances);
             }
             else
@@ -86,9 +84,9 @@ int main(int argc,char** argv)
             LatentQueryPoint.PointID = i;
             LatentQueryPoint.Vector = &LatentQueries[i];
             time.push_back(SearchOnGraph(ExpansionPoints,&LatentQueryPoint,graph,NearestNeighbors,TankCandidates));
-            BruteForceTime.push_back(BruteForce(&TrueDistances,LatentImages,*LatentQueryPoint.Vector,NearestNeighbors));
+            BruteForceTime.push_back(BruteForce(&BruteForceLatentToNormalSpace,LatentImages,*LatentQueryPoint.Vector,NearestNeighbors));
             TrueBruteForceTime.push_back(BruteForce(&BruteForceDistances,Images,*QueryPoint.Vector,NearestNeighbors));
-            WriteToFile(MyFile,time,BruteForceTime,method,ExpansionPoints,TrueDistances,BruteForceDistances,TrueBruteForceTime,&LatentQueryPoint);
+            WriteToFile(MyFile,time,BruteForceTime,method,ExpansionPoints,BruteForceLatentToNormalSpace,BruteForceDistances,TrueBruteForceTime,&QueryPoint,Images);
             ClearVectors(time,BruteForceTime,ExpansionPoints,TrueDistances,TrueBruteForceTime,BruteForceDistances);
         }
         else

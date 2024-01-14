@@ -90,6 +90,29 @@ double BruteForce(vector<double>* Distances,vector<vector<byte>> Points,vector<b
     return duration.count() * 1000;
 }
 
+double BruteForce(vector<tuple<double,int>>* Distances,vector<vector<byte>> Points,vector<byte> QueryPoint,int NearestNeighbors)
+{   
+    /*Count ms it takes to complete*/
+    auto start_time = chrono::high_resolution_clock().now();
+    /*For all points in the dataset*/
+    for(int i = 0;i < Points.size(); i++)
+        Distances->push_back(tuple(PNorm(&Points[i],&QueryPoint,2),i));
+    /*Sort the points*/
+    sort(Distances->begin(),Distances->end(),CandidatesComparisonFuncitonForTuple);
+
+    Distances->erase(Distances->begin() + NearestNeighbors,Distances->end());
+        
+    auto end_time = chrono::high_resolution_clock().now();
+
+    chrono::duration<double> duration = end_time - start_time;
+    /*Return the duration of the brute force search*/
+    return duration.count() * 1000;
+}
+
+bool CandidatesComparisonFuncitonForTuple(tuple<double,int>& A,tuple<double,int>& B)
+{
+    return get<0>(A) < get<0>(B);
+}
 
 /*These functions are used to get the arguments from the command line as well as*/
             /*to open the binary files given as input*/
@@ -372,17 +395,20 @@ void WriteToFile(ostream& MyFile,vector<double>& time,vector<double>& BruteForce
 }
 
 void WriteToFile(ostream& MyFile,vector<double>& time,vector<double>& BruteForceTime,char* method,vector<tuple<GraphPoint*, double>>& ExpansionPoints,
-                vector<double>& TrueDistances,vector<double>& TrueBruteForceDistances,vector<double>& TrueBruteForceTime,GraphPoint* QueryPoint)
+                vector<tuple<double,int>>& BruteForceLatentToNormalSpace,vector<double>& TrueBruteForceDistances,vector<double>& TrueBruteForceTime,GraphPoint* QueryPoint,vector<vector<byte>>& Images)
 {
     MyFile<<"Query: "<<QueryPoint->PointID<<endl; //Write Query Point ID
     double LatentAverageDistance = 0.0,AverageBruteForceDistance = 0.0;
+    double ApproxDistNormalSpace = 0.0,TrueDistLatentToNormalSpace = 0.0;
     for(int i = 0;i < ExpansionPoints.size(); i++)//Write Input Point ID,Distance by method,Distance by BruteForce
     {
+        ApproxDistNormalSpace = PNorm(QueryPoint->Vector,&Images[get<0>(ExpansionPoints[i])->PointID],2);
+        TrueDistLatentToNormalSpace = PNorm(QueryPoint->Vector,&Images[get<1>(BruteForceLatentToNormalSpace[i])],2);
         MyFile<<"Nearest Neighbor-"<<i<<": "<<get<0>(ExpansionPoints[i])->PointID<<endl
-              <<"distanceApproximate: "<<get<1>(ExpansionPoints[i])<<endl
-              <<"distanceLatentTrue: "<<TrueDistances[i]<<endl
+              <<"distanceApproximate: "<<ApproxDistNormalSpace<<endl
+              <<"distanceLatentTrue: "<<TrueDistLatentToNormalSpace<<endl
               <<"distanceTrue: "<<TrueBruteForceDistances[i]<<endl;
-        LatentAverageDistance += get<1>(ExpansionPoints[i]);
+        LatentAverageDistance += ApproxDistNormalSpace;
         AverageBruteForceDistance += TrueBruteForceDistances[i];
     }
 
