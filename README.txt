@@ -1,6 +1,8 @@
-Λαμπρόπουλος Κωνσταντίνος ΑΜ: sdi1800092
+Λαμπρόπουλος Κωνσταντίνος
+ΑΜ: 1115201800092 
 
-Γκέργκη Δημήτρης ΑΜ: sdi1800029
+Γκέργκη Δημήτρης
+ΑΜ: 1115201800029
 
 Η ανάλυση των αποτελεσμάτων των ερωτημάτων Β και Γ όπως και το tuning του νευρωνικού δικτύου βρίσκονται στο 
 REPORT.pdf
@@ -67,7 +69,36 @@ binary file με την χρήση της ReadInput και να αποθηκεύ
 και χειρίζεται επίσης το validation του μοντέλου(χρησιμοποιώντας το validation set).
 Τέλος υπάρχει η συνάρτηση PlotLearningCurve,η οποία είναι υπεύθυνη για την δημιουργία learning curves για κάθε test.
 
+Η εκτέλεση του reduce.py γίνεται όπως περιγράφεται στην εκφώνηση.Ενδεικτικά:
+	python3 reduce.py -d ./Data/input.dat -q ./Data/query.dat -od output_dataset.dat -oq output_query.dat
 
+3)Αλλαγές στο Project2:
+	3.1)graph_search.cpp:
+		Πλέον εκτελείται μόνο για ένα query αρχείο τη φορά,αλλά δέχεται τις εικόνες και στον αρχικό διανυσματικό χώρο και στον νέο διανυσματικό χώρο ,και για 2000 εικόνες εκτέλει τον εκάστοτε αλγόριθμο (MRNG,GNNS) μαζί πάντα με τον BruteForce.
+	3.2)misc.cpp:
+		Αλλαγές στην WriteToFile η οποία πλέον παράγει το output που περιγράφεται στην εκφώνηση και 		υλοποίηση της συνάρτησης OpenLatentFile,η οποία είναι υπεύθυνη για το διάβασμα των δεδομένων 		από τον νέο διανυσματικό χώρο.Τέλος όπως και στο Project1 έτσι και εδώ πλέον το εκτελέσιμο 		αρχείο δέχεται παραπάνω ορίσματα.Μια ενδεικτική εκτέλεση είναι:
+				./graph_search -d ./Data/input.dat -q ./Data/query.dat -m 2 
+					-o latent_MRNG.txt -od latent_input.dat 
+					-oq .latent_query.dat -latent
+		
+		ενώ για την εκτέλεση αποκλειστικά στον αρχικό χώρο:
+				./graph_search -d ./Data/input.dat -q ./Data/query.dat -m 2 
+					-o MRNG.txt
+4)Αλλαγές στο Project1:
+	4.1)Lsh:
+		Μοντελοποιήθηκε η WriteToFile ώστε να δίνει το desired output που δίνουν και οι συναρτήσεις 		graph_search.Χρησιμοποιούνται 2000 εικόνες.
+	4.2)Hypercube:
+		Μοντελοποιήθηκε η WriteToFile ώστε να δίνει το desired output που δίνουν και οι συναρτήσεις 		graph_search.Χρησιμοποιούνται 2000 εικόνες.
+	4.3)Cluster:
+		Υλοποιήθηκε η Kmeans++ initializatin που έλειπε από το πρώτο παραδοτέο,υλοποιήθηκε η συνάρτηση 		αποτίμησης στόχου,όπως και η Silhouette για τον νέο χώρο(όπου βρίσκουμε την πλησιέστερη εικόνα 		στον νέο χώρο και χρησιμοποιούμε αυτήν ως νέο κέντρο).Επίσης υλοποιήθηκε output βάσει τα νέα 		δεδομένα ώστε να παράγει το Plot.py scatter plots για τις τιμές των Silhouette.Μια ενδεικτική 		εκτέλεση είναι:
+			./cluster -i ../Data/input.dat -c cluster.conf -o Cluster_latent.txt -m Classic 
+				-oi ../Data/latent_input.dat
+		και για τον αρχικό χώρο : 
+			./cluster -i ../Data/input.dat -c cluster.conf -o Cluster.txt -m Classic 
+
+Υπάρχουν τα makefiles για τα Projects1 και 2 και αν τυχόν δεν δουλεύουν,υπάρχουν στα README των παραδοτέων(τα οποία βρίσκονται στους καταλόγους Project1 και Project2) οδηγίες για compile και execution.
+
+		
 
 
 
