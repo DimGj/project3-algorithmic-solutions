@@ -6,7 +6,7 @@ import os
 import re
 
 class Autoencoder:
-    def __init__(self, input_shape=(28, 28, 1), latent_dim=30):
+    def __init__(self, input_shape=(28, 28, 1), latent_dim=10):
         self.input_shape = input_shape
         self.latent_dim = latent_dim
         self.autoencoder_model = self.__build_autoencoder()

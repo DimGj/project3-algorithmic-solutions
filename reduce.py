@@ -13,9 +13,10 @@ query_array,query_indexes = FileHandler.ReadInput(query,True)
 #Split the data in training and validation
 X_train,X_Val = train_test_split(train_array,test_size=0.2)
 
-model = Autoencoder()
+model = Autoencoder(latent_dim=30)
 
 model.train(X_train,X_Val)
+exit()
 
 train_images = []
 query_images = []
