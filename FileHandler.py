@@ -38,18 +38,14 @@ def ReadInput(file_path, IsQueryFile=False):
     return images_array,indexes
 
 def WriteOutput(output_dir,images):
-    index,image = images[0]
     with open(output_dir,'wb') as file:
         file.write(struct.pack('>I', 52))
         file.write(struct.pack('>I', len(images)))
-        file.write(struct.pack('>I', len(image)))
+        file.write(struct.pack('>I', len(image[0])))
 
 
-        for index,image in images:
+        for image in images:
             pixel_data = image.astype(np.uint8).tobytes()
-
-            index_bytes = struct.pack('>I', index)
-            #file.write(index_bytes)
             file.write(pixel_data)
 
 

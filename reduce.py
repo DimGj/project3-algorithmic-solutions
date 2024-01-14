@@ -16,13 +16,12 @@ X_train,X_Val = train_test_split(train_array,test_size=0.2)
 model = Autoencoder(latent_dim=30)
 
 model.train(X_train,X_Val)
-exit()
 
 train_images = []
 query_images = []
 latent_dim_images = model.encode(train_array)
 for i in range(len(latent_dim_images)):
-    train_images.append((indexes[i],(latent_dim_images[i] * 255.0).flatten()))
+    train_images.append((latent_dim_images[i] * 255.0).flatten())
 
 FileHandler.WriteOutput(output_dataset,train_images)
 

@@ -56,7 +56,6 @@ class Autoencoder:
     def __build_encoder_model(self):
         input_img = Input(shape=self.input_shape)
 
-        # Encoder
         conv1 = Conv2D(32, (3, 3), activation='relu', padding='same')(input_img)
         pool1 = MaxPooling2D(pool_size=(2, 2))(conv1)
         conv2 = Conv2D(64, (3, 3), activation='relu', padding='same')(pool1)
@@ -70,15 +69,6 @@ class Autoencoder:
     
     def encode(self, x):
         return self.encoder_model.predict(x)
-
-    def decode(self, x):
-        decoder_model = Model(self.autoencoder_model.layers[5].input, self.autoencoder_model.layers[-1].output)
-        return decoder_model.predict(x)
-    
-    def evaluate(self,validation_set):
-        validation_loss = self.autoencoder_model.evaluate(validation_set,validation_set)
-        print(f"Reconstruction Loss on Validation Set: {validation_loss}")
-
 
     def PlotLearningCurve(self, training_data, validation_data, epochs_range, labels=['Training Loss', 'Validation Loss'], title='Training and Validation Loss', ylabel='Loss'):
         
