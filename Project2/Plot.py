@@ -124,7 +124,7 @@ def CreatePlot(approx_vals,true_vals,query_ids,title,x_label,y_label,scatter_lab
             values = [mean_ratio_af]
             plt.bar(labels, values, color=['purple']) #Inserting plt.bar into the existing plot
             if values:
-                plt.text(0, values[0], f'{values[0]:.2f}', ha='center', va='bottom')
+                plt.text(0, values[0], f'{values[0]:.3f}', ha='center', va='bottom')
 
         plt.scatter(query_ids,approx_vals,label=scatter_labels[0],color=colors[0])
         plt.scatter(query_ids,true_vals,label=scatter_labels[1],color=colors[1])   
