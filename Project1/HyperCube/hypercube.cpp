@@ -220,8 +220,8 @@ int Hypercube::WriteToFile(ofstream& MyFile,Point point,vector<double>& Distance
         /*Check if they are within range*/
         if(Candidates[i].Distance <= Range)
         {
-            MyFile<<"Nearest Neighbor "<<i<<": "<<Candidates[i].PointID<<endl
-                  <<"distanceHyperCube: "<<Candidates[i].Distance<<endl
+            MyFile<<"Nearest Neighbor-"<<i<<": "<<Candidates[i].PointID<<endl
+                  <<"distanceApproximate: "<<Candidates[i].Distance<<endl
                   <<"distanceTrue: "<<Distances[i]<<endl;
                 AverageApproxDist += Candidates[i].Distance;
                 AverageTrueDist += Distances[i];

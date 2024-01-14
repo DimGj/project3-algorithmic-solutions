@@ -23,19 +23,14 @@ int main(int argc,char** argv)
             return -1;
         if(OpenLatentFile(latent_query_file,&LatentQueries,true) == -1)
             return -1;
-        if(OpenFile(input_file,&Images,false) == -1)
-            return -1;
-        if(OpenFile(query_file,&Queries,true) == -1)
-            return -1;
-    }
-    else{
-        if(OpenFile(input_file,&Images,false) == -1)
-            return -1;
-        if(OpenFile(query_file,&Queries,true) == -1)
-            return -1;
+        LatentImages.erase(LatentImages.begin() + 2000,LatentImages.end());
     }
 
-    LatentImages.erase(LatentImages.begin() + 2000,LatentImages.end());
+    if(OpenFile(input_file,&Images,false) == -1)
+        return -1;
+    if(OpenFile(query_file,&Queries,true) == -1)
+        return -1;
+        
     Images.erase(Images.begin() + 2000,Images.end());
     //initialize graph depending on method
     Graph* graph;

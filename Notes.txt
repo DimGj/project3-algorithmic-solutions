@@ -1,3 +1,0 @@
-1)Change image pixel values back to their original(instead of them being in [0,1],make them back to [0,255.0])
-2)Image output dimension should be <30.
-3)Save Images to load them at CPP projects.

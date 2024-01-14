@@ -9,7 +9,9 @@ double PNorm(vector<byte>& A,vector<byte>& B,int p)
     /*Both vectors must be of the same size*/
     if(A.size() != B.size())
     {
-        cout<<"Vector sizes do not match!"<<endl;
+        cout<<"Vector sizes do not match!"<<endl
+            <<"A has size: "<<A.size()<<endl
+            <<"B has size: "<<B.size()<<endl;
         return -1.0;
     }
 
@@ -279,4 +281,44 @@ void OpenFile(char* filename,vector<vector<byte>>* images,bool test)
             break; //break the loop
     }
     file.close(); //close the file descriptor
+}
+
+/*Opens a binary file and returns a 2D vector with all its images*/
+int OpenLatentFile(char* filename,vector<vector<byte>>* images,bool test)
+{
+    LatentHeader header; //A header with the file metadata
+    ifstream file(filename, ios::binary); //open the file as binary
+    if(!file.is_open())
+    {
+        cout<<"Failed to open file: "<<filename<<endl
+            <<"Make sure the file exists!"<<endl;
+        return -1;
+    }
+    file.read(reinterpret_cast<char*>(&header), sizeof(Header)); //get the header bytes
+
+    header.magic_number = htonl(header.magic_number); //Convert the values to 32 bit
+    header.num_images = htonl(header.num_images);
+    header.image_length = htonl(header.image_length);
+
+
+    if(test)
+        header.num_images = 10;
+
+    vector<byte> temp(header.image_length); //a temp vector to store the pixels
+    while (!file.eof()) 
+    {
+        file.read(reinterpret_cast<char*>(temp.data()), header.image_length*sizeof(byte)); //Read an entire image as a vector
+
+        images->push_back(temp); //Store it in the images vector
+        if(temp.size() != header.image_length)
+        {
+            cout<<"ERROR!Invalid input size!"<<endl;
+            exit(-1);
+        }
+
+        if (images->size() == header.num_images) //if we have all the images 
+            break; //break the loop
+    }
+    file.close(); //close the file descriptor
+    return 0;
 }
