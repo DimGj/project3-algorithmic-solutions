@@ -1,4 +1,6 @@
 import sys
+import numpy as np
+import os
 import matplotlib.pyplot as plt
 
 
@@ -92,8 +94,9 @@ def Plot(latent_file,normal_file,isLatent = False):
         #Create Time float
         CreatePlot(tApprox ,tTrue,PointIDs,title='Scatter Plot for time',x_label='Query IDs',y_label='Time (ms)',
                    scatter_labels=['Latent time','True time'],output_file='latent-true_time')
-        
-        CreatePlot(distanceLatentBrute ,distanceTrue,PointIDs,title='Scatter Plot for distances',x_label='Query IDs',y_label='Distances',
+        output_file_path = './Outputs/latent_true-true_dist.png'
+        if not os.path.exists(output_file_path): #Check if the file already exists
+            CreatePlot(distanceLatentBrute ,distanceTrue,PointIDs,title='Scatter Plot for distances',x_label='Query IDs',y_label='Distances',
                    scatter_labels=['Latent true dist','True dist'],output_file='latent_true-true_dist')
          
         CreatePlot(tLatentTrue ,tTrue,PointIDs,title='Scatter Plot for time',x_label='Query IDs',y_label='Time (ms)',
@@ -114,12 +117,9 @@ def Plot(latent_file,normal_file,isLatent = False):
     #Create Distances Plot
     CreatePlot(distanceApprox,distanceBrute,PointIDs,title='Scatter Plot for distances',x_label='Query IDs',y_label='Distances',
                 scatter_labels=['Approx Distances','True Distances'],output_file='approx-true_distances')
-        #Create Time float
-    CreatePlot(tApprox ,tTrue,PointIDs,title='Scatter Plot for time',x_label='Query IDs',y_label='Time (ms)',
-                scatter_labels=['Approx time','True time'],output_file='approx-true_time')
-        
+
     CreatePlot(aF_Latent ,aF_true,PointIDs,title='Scatter Plot for Approximation Factor',x_label='Query IDs',y_label='Approximation Factor',
-                scatter_labels=['Latent AF','True AF'],output_file='latent-true_AF') 
+                scatter_labels=['Latent AF','True AF'],output_file='latent-true_AF',meanAF=True) 
 
 def PlotCluster(cluster_file,cluster_latent):
     Silhouette = ReadClusterFiles(cluster_file)
@@ -139,17 +139,30 @@ def PlotCluster(cluster_file,cluster_latent):
                 scatter_labels=['Silhouettes Latent','True Silhouettes'],output_file='latent-true_silhouettes')      
 
     
-def CreatePlot(approx_vals,true_vals,query_ids,title,x_label,y_label,scatter_labels,output_file,colors = ['red','blue'],figsize = (10,6)):
-        #Create Distances Plot
-        plt.figure(figsize=figsize)
-        plt.scatter(query_ids,approx_vals,label=scatter_labels[0],color=colors[0])
-        plt.scatter(query_ids,true_vals,label=scatter_labels[1],color=colors[1])
-        plt.title(title)
-        plt.xticks(query_ids)
-        plt.xlabel(x_label)
-        plt.ylabel(y_label)
-        plt.legend()
-        plt.savefig(output_file)
+def CreatePlot(approx_vals, true_vals, query_ids, title, x_label, y_label, scatter_labels, output_file, colors=['red', 'blue'], figsize=(10, 6), meanAF=False):
+    # Create Distances Plot
+    plt.figure(figsize=figsize)
+
+    labels, values = [], []
+    if meanAF:
+        mean_ratio_af = np.mean(approx_vals) / np.mean(true_vals)  # Calculate mean Latent AF and True AF
+        labels.append('Mean ratio AF')
+        values.append(mean_ratio_af)
+    
+    plt.bar(labels, values, color=['purple'])  # Inserting plt.bar into the existing plot
+
+    plt.scatter(query_ids, approx_vals, label=scatter_labels[0], color=colors[0])
+    plt.scatter(query_ids, true_vals, label=scatter_labels[1], color=colors[1])
+
+    for i, (label, value) in enumerate(zip(labels, values)):
+        if i == 0:
+            plt.text(i, value, f'{value:.2f}', ha='center', va='bottom')
+
+    plt.title(title)
+    plt.xlabel(x_label)
+    plt.ylabel(y_label)
+    plt.legend()
+    plt.savefig(output_file)
 
 latent_file,normal_file,cluster,cluster_latent = None,None,None,None
 
