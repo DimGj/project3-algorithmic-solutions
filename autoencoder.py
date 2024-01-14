@@ -6,7 +6,7 @@ import os
 import re
 
 class Autoencoder:
-    def __init__(self, input_shape=(28, 28, 1), latent_dim=25):
+    def __init__(self, input_shape=(28, 28, 1), latent_dim=30):
         self.input_shape = input_shape
         self.latent_dim = latent_dim
         self.autoencoder_model = self.__build_autoencoder()
@@ -16,21 +16,21 @@ class Autoencoder:
         input_img = Input(shape=self.input_shape)
 
         # Encoder
-        conv1 = Conv2D(32, (3, 3), activation='relu', padding='same')(input_img)
+        conv1 = Conv2D(32, (3, 3), activation='gelu', padding='same')(input_img)
         pool1 = MaxPooling2D(pool_size=(2, 2))(conv1)
-        conv2 = Conv2D(64, (3, 3), activation='relu', padding='same')(pool1)
+        conv2 = Conv2D(64, (3, 3), activation='gelu', padding='same')(pool1)
         pool2 = MaxPooling2D(pool_size=(2, 2))(conv2)
-        conv3 = Conv2D(128, (3, 3), activation='relu', padding='same')(pool2)
+        conv3 = Conv2D(128, (3, 3), activation='gelu', padding='same')(pool2)
         flatten = Flatten()(conv3)
-        dense_latent = Dense(self.latent_dim, activation='relu')(flatten)
+        dense_latent = Dense(self.latent_dim, activation='gelu')(flatten)
         #10 pixels
 
         # Decoder
-        dense_upsample = Dense(128 * 7 * 7, activation='relu')(dense_latent)
+        dense_upsample = Dense(128 * 7 * 7, activation='gelu')(dense_latent)
         reshape = Reshape((7, 7, 128))(dense_upsample)
-        conv4 = Conv2D(64, (3, 3), activation='relu', padding='same')(reshape)
+        conv4 = Conv2D(64, (3, 3), activation='gelu', padding='same')(reshape)
         up1 = UpSampling2D((2, 2))(conv4)
-        conv5 = Conv2D(32, (3, 3), activation='relu', padding='same')(up1)
+        conv5 = Conv2D(32, (3, 3), activation='gelu', padding='same')(up1)
         up2 = UpSampling2D((2, 2))(conv5)
         decoded = Conv2D(1, (3, 3), activation='sigmoid', padding='same')(up2)
 
