@@ -672,7 +672,7 @@ double Cluster::ObjectiveFunction()
         minDistance = numeric_limits<double>::max();
         currentDistance = 0.0;
     }
-    return sqrt(Norm);
+    return Norm;
 }
 
 //Objective Function for latent space(conversion from latent to normal space first)
